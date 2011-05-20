@@ -493,6 +493,16 @@ config MACH_GLACIER
        help
          Support for the Qualcomm MSM7x30 Glacier board.
 
+config GLACIER_OVERLAY_FORCE_UPDATE
+       depends on MACH_GLACIER
+       depends on MSM_MDP40
+       default y
+       bool "Force overlay to update screen"
+       help
+         Update the screen when the overlay is updated.
+         Do not use this if your framework updates the
+         screen when the overlay is updated.
+
 config MACH_SAGA
        depends on ARCH_MSM7X30
        depends on !MSM_STACKED_MEMORY
@@ -1315,8 +1325,6 @@ config MSM_CPU_FREQ_SCREEN_ON
 
 endif # MSM_CPU_FREQ_SCREEN
 
-if PERFLOCK
-
 config MSM_CPU_FREQ_ONDEMAND_MAX
 	int "Max"
 	default 384000
@@ -1324,8 +1332,6 @@ config MSM_CPU_FREQ_ONDEMAND_MAX
 config MSM_CPU_FREQ_ONDEMAND_MIN
 	int "Min"
 	default 245760
-
-endif # PERFLOCK
 
 config MSM_HW3D
 	tristate "MSM Hardware 3D Register Driver"
@@ -1695,11 +1701,6 @@ config ACPUCLOCK_OVERCLOCKING
 	depends on CPU_FREQ && !PERFLOCK
 	depends on ARCH_MSM7X30
 
-config JESUS_PHONE
-        bool "Enable support for unstable CPU frequencies"
-        default n
-        depends on ACPUCLOCK_OVERCLOCKING
-
 config HTC_SMEM_MSMC1C2_DEBUG
 	bool "MSMC1/MSMC2 shared memory debug"
 	default n
@@ -1829,3 +1830,11 @@ config MSM7X30_DDR2
 	bool "Request max ebi1 at max cpu frequency"
 	depends on ARCH_MSM7X30
 	default n
+
+config STOCK_VOLTAGE
+	bool "HTC Stock Voltages"
+	default n
+        depends on CPU_FREQ && !PERFLOCK
+        depends on ARCH_QSD8X50 || ARCH_MSM7X30 || ARCH_MSM7X00A || ARCH_MSM7227 || ARCH_MSM7225
+	help
+		Enable HTC stock voltages.
