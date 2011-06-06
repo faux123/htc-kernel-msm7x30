@@ -816,10 +816,10 @@ static int msmfb_overlay_play(struct fb_info *info, unsigned long *argp)
 
 	ret = mdp->overlay_play(mdp, info, &req, &p_src_file);
 
-	if (ret == 0 && (mdp->overrides & MSM_MDP_FORCE_UPDATE) 
-		&& msmfb->sleeping == AWAKE ) {
+	if (ret == 0 && (mdp->overrides & MSM_MDP_FORCE_UPDATE)
+			&& msmfb->sleeping == AWAKE) {
 		msmfb_pan_update(info,
-			0, 0, info->var.xres, info->var.yres, 
+			0, 0, info->var.xres, info->var.yres,
 			info->var.yoffset, 1);
 	}
 
