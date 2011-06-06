@@ -37,6 +37,7 @@ struct mdp_device;
 #define MSM_MDP_ABL_ENABLE			(1 << 6)
 #define MSM_MDP_FORCE_UPDATE			(1 << 7)
 
+
 /* mddi type */
 #define MSM_MDP_MDDI_TYPE_I	 0
 #define MSM_MDP_MDDI_TYPE_II	 1
