@@ -110,7 +110,9 @@ static struct cpufreq_frequency_table freq_table[] = {
 	{ 16, 1747200 },
 	{ 17, 1804800 },
 	{ 18, 1843200 },
-	{ 19, CPUFREQ_TABLE_END },
+	{ 19, 1939200 },
+	{ 20, 2035200 },
+	{ 21, CPUFREQ_TABLE_END },
 
 };
 
@@ -164,6 +166,8 @@ static struct clkctl_acpu_speed acpu_freq_tbl[] = {
 	{ 1747200, PLL_2,   3, 0,  192000000, 1400, VDD_RAW(1400) },
 	{ 1804800, PLL_2,   3, 0,  192000000, 1425, VDD_RAW(1425) },
 	{ 1843200, PLL_2,   3, 0,  192000000, 1425, VDD_RAW(1425) },
+	{ 1939200, PLL_2,   3, 0,  192000000, 1450, VDD_RAW(1450) },
+	{ 2035200, PLL_2,   3, 0,  192000000, 1475, VDD_RAW(1475) },
 	{ 0 }
 };
 #else
@@ -195,6 +199,8 @@ static struct clkctl_acpu_speed acpu_freq_tbl[] = {
 	{ 1747200, PLL_2,   3, 0,  192000000, 1425, VDD_RAW(1425) },
 	{ 1804800, PLL_2,   3, 0,  192000000, 1450, VDD_RAW(1450) },
 	{ 1843200, PLL_2,   3, 0,  192000000, 1450, VDD_RAW(1450) },
+	{ 1939200, PLL_2,   3, 0,  192000000, 1475, VDD_RAW(1475) },
+	{ 2035200, PLL_2,   3, 0,  192000000, 1475, VDD_RAW(1475) },
 	{ 0 }
 };
 #endif
@@ -452,7 +458,7 @@ static unsigned int acpuclk_get_current_vdd(void)
 	unsigned int vdd_mv;
 
 	vdd_raw = msm_spm_get_vdd();
-	for (vdd_mv = 750; vdd_mv <= 1475; vdd_mv += 25)
+	for (vdd_mv = 750; vdd_mv <= 1500; vdd_mv += 25)
 		if (VDD_RAW(vdd_mv) == vdd_raw)
 			break;
 
@@ -475,7 +481,7 @@ static int acpuclk_update_freq_tbl(unsigned int acpu_khz, unsigned int acpu_vdd)
 		pr_err("%s: acpuclk invalid speed %d\n", __func__, acpu_khz);
 		return -1;
 	}
-	if (acpu_vdd > 1475 || acpu_vdd < 750) {
+	if (acpu_vdd > 1500 || acpu_vdd < 750) {
 		pr_err("%s: acpuclk vdd out of ranage, %d\n",
 			__func__, acpu_vdd);
 		return -2;
